@@ -1,15 +1,26 @@
-CC = clang
-CFLAGS = -std=c11 -Wall
-SRC = main.c
-OBJ = main.o
-BIN = main
+CC := clang
+CFLAGS := -std=c11 -Wall
 
-$(BIN): $(OBJ)
-	$(CC) $(OBJ) -o $(BIN)
+SRC_DIR := src
+BUILD_DIR := build
 
-$(OBJ): $(SRC)
-	$(CC) $(CFLAGS) -c $(SRC) -o $(OBJ)
+SRC := $(wildcard $(SRC_DIR)/*.c)
+OBJ := $(patsubst %.c,$(BUILD_DIR)/%.o,$(notdir $(SRC)))
+TARGET := $(BUILD_DIR)/main
 
-# .PHONY clean
+.PHONY: all clean
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) $(addprefix $(BUILD_DIR)/,$(OBJ)) -o $@
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
 clean:
-	rm -rf $(OBJ) $(BIN)
+	rm -rf $(BUILD_DIR)
+
