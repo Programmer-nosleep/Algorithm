@@ -7,7 +7,6 @@
 struct Node* constructor(struct Node** head, size_t length, int data)
 {
   struct Node* handler = (struct Node*)malloc(sizeof(struct Node));
-
   handler->self = *head;
   
   return *head;
