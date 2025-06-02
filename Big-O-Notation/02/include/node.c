@@ -23,56 +23,55 @@ struct Node* deconstructor(struct Node** head)
   return *head;
 }
 
-
 void println(const char *fmt, ...)
 {
-    va_list args;
-    va_start(args, fmt);
+  va_list args;
+  va_start(args, fmt);
 
-    while (*fmt)
+  while (*fmt)
+  {
+    if (*fmt == '%')
     {
-        if (*fmt == '%')
-        {
-            fmt++;  // Lanjut ke karakter format berikutnya
-            switch (*fmt)
-            {
-                case 's': {
-                    const char *str = va_arg(args, const char *);
-                    printf("%s", str);
-                    break;
-                }
-                case 'd': {
-                    int val = va_arg(args, int);
-                    printf("%d", val);
-                    break;
-                }
-                case 'f': {
-                    double fval = va_arg(args, double);
-                    printf("%f", fval);
-                    break;
-                }
-                case '%': {
-                    putchar('%');  // handle %% → %
-                    break;
-                }
-                default:
-                    // Kalau gak dikenali, cetak % dan char-nya
-                    // putchar('%');
-                    putchar(*fmt);
-                    break;
-            }
+      fmt++; 
+      switch (*fmt)
+      {
+        case 's': {
+          const char *str = va_arg(args, const char *);
+          printf("%s", str);
+          break;
         }
-        else
-        {
-            putchar(*fmt);
+        case 'd': {
+          int val = va_arg(args, int);
+          printf("%d", val);
+          break;
         }
-
-        fmt++;  // pindah ke karakter selanjutnya
+        case 'f': {
+          double fval = va_arg(args, double);
+          printf("%f", fval);
+          break;
+        }
+        case '%': {
+          putchar('%');
+          break;
+        }
+        default:
+          putchar('%');
+          putchar(*fmt);
+          break;
+      }
+    }
+    else
+    {
+      putchar(*fmt);
     }
 
-    putchar('\n');
-    va_end(args);
+    fmt++;
+  }
+
+  putchar('\n');
+  va_end(args);
 }
+
 
 
 void file(const char *file, const char *args, ...)

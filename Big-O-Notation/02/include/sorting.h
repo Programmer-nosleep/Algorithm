@@ -7,9 +7,9 @@ typedef struct Data
   int index[];
 };
 
-void lsort(struct Data* data, int n, ...);
-void bsort(struct Data* data, int n, ...);
-void qsort(struct Data* data, int n, ...);
-void  
+void linearsort(struct Data* data, int n, ...);
+void bubblesort(struct Data* data, int n, ...);
+void quicksort(struct Data* data, int n, ...);
+int compsort(const void* a, const void* b); 
 
 #endif
