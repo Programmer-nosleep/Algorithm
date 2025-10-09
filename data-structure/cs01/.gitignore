@@ -1,0 +1,5 @@
+/build/*
+main
+
+*.ini
+.DS_Store
