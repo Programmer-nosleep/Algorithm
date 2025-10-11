@@ -1,11 +1,12 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 
+#include "include/_stack.h"
 #include "include/array.h"
-#include "include/singlelinkedlist.h"
+// #include "include/singlelinkedlist.h"
+#include "include/_stack.h"
 
-int print_array() {
+void print_array() {
     Mahasiswa student[MAX_PELAJAR];
     int counting_student = 0;
 
@@ -27,29 +28,43 @@ int print_array() {
 
     float value = counting_ipk(student, counting_student);
     printf("rata-rata value nya: %.2f\n", value);
-
-    return 0;
 }
 
-void print_singlelinkedlist() {
-    add_task("proses bayar pengguna", 1);
-    add_task("singkronisasi data ke cloud", 2);
-    add_task("kirim notifikasi ke email", 3);
+// void print_singlelinkedlist() {
+//     add_task("proses bayar pengguna", 1);
+//     add_task("singkronisasi data ke cloud", 2);
+//     add_task("kirim notifikasi ke email", 3);
 
-    display_task();
-    // delete_task(3);
+//     display_task();
+//     // delete_task(3);
 
-    execute_task();
-    execute_task();
+//     execute_task();
+//     execute_task();
 
-    display_task();
+//     display_task();
 
-    delete_task(100);
+//     delete_task(100);
+// }
+
+void print_doublelinkedlist() {
+
+}
+
+void print_circularlinkedlist() {
+
+}
+
+void print_stack() {
+    char expression[] = { "3 4 + 2 *" };
+    long result = evaluation_postfix(expression);
+    printf("hasil : %s = %ld\n\n", expression, result);
 }
 
 int main(void) {
     // print_array(); 
-    print_singlelinkedlist();
+    // print_singlelinkedlist();
+
+    print_stack();
 
     return 0;
 }

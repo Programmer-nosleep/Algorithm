@@ -9,7 +9,7 @@
 #include "singlelinkedlist.h"
 
 // Inisialisasi head dari linked list sebagai NULL (kosong)
-Node *head = NULL;
+Node *head_single_linked_list = NULL;
 
 /**
  * @brief Membuat sebuah node baru.
@@ -22,13 +22,13 @@ Node *head = NULL;
  * @param priory Prioritas dari tugas.
  * @return Pointer ke node yang baru dibuat.
  */
-Node* create_node(int id, const char *desk, int priory) {
+Node* create_single_node(int id, const char *desk, int priory) {
     // Alokasikan memori untuk node baru
     Node *node = (Node*)malloc(sizeof(Node));
 
     // Cek jika alokasi memori gagal
     if (!node) {
-        fprintf(stderr, "an error with alloc memory new nodes.\n");
+        fprintf(stderr, "Error: Terjadi kesalahan saat mengalokasikan memori untuk node baru.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -53,20 +53,20 @@ Node* create_node(int id, const char *desk, int priory) {
  */
 void add_task(const char * desk, int priory) {
     static int next_id = 1; // ID dimulai dari 1 dan akan terus bertambah
-    Node* node = create_node(next_id++, desk, priory);
+    Node* node = create_single_node(next_id++, desk, priory);
 
     // Jika linked list kosong, node baru menjadi head
-    if (head == NULL) {
-        head = node;
+    if (head_single_linked_list == NULL) {
+        head_single_linked_list = node;
     } else {
         // Jika tidak, cari node terakhir dan tambahkan node baru setelahnya
-        Node* current = head;
+        Node* current = head_single_linked_list;
         while (current->next != NULL) {
             current = current->next;
         }
         current->next = node;
     }
-    printf("Task with ID %%d has been added: %%s (priority %%d)\n", node->task.id, desk, priory);
+    printf("Tugas dengan ID %d telah ditambahkan: %s (prioritas %d)\n", node->task.id, desk, priory);
 }
 
 /**
@@ -78,16 +78,16 @@ void add_task(const char * desk, int priory) {
  */
 bool execute_task() {
     // Cek jika linked list kosong
-    if (head == NULL) {
-        printf("The list is empty. Please add some tasks first.\n");
+    if (head_single_linked_list == NULL) {
+        printf("Daftar kosong. Mohon tambahkan tugas terlebih dahulu.\n");
         return false;
     }
 
-    Node *node = head;
-    printf("Executing task with ID %%d: %%s (priority %%d)\n", node->task.id, node->task.desk, node->task.priority);
+    Node *node = head_single_linked_list;
+    printf("Mengeksekusi tugas dengan ID %d: %s (prioritas %d)\n", node->task.id, node->task.desk, node->task.priority);
 
     // Pindahkan head ke node berikutnya dan bebaskan memori dari node lama
-    head = head->next;
+    head_single_linked_list = head_single_linked_list->next;
     free(node);
     return true;
 }
@@ -97,16 +97,16 @@ bool execute_task() {
  */
 void display_task() {
     // Cek jika linked list kosong
-    if (head == NULL) { 
+    if (head_single_linked_list == NULL) { 
         return;
     }
 
-    puts("Task List:");
+    puts("Daftar Tugas:");
 
     // Lakukan iterasi pada setiap node dan tampilkan datanya
-    Node *node = head;
+    Node *node = head_single_linked_list;
     while (node != NULL) {
-        printf("ID: %%d, Description: %%s, Priority: %%d\n", node->task.id, node->task.desk, node->task.priority);
+        printf("ID: %d, Deskripsi: %s, Prioritas: %d\n", node->task.id, node->task.desk, node->task.priority);
         node = node->next;
     }
     puts("");
@@ -120,11 +120,11 @@ void display_task() {
  */
 bool delete_task(int id) {
     // Cek jika linked list kosong
-    if (head == NULL) {
+    if (head_single_linked_list == NULL) {
         return false;
     }
 
-    Node *node = head;
+    Node *node = head_single_linked_list;
     Node *node_prev = NULL;
 
     // Cari node dengan ID yang sesuai
@@ -135,19 +135,19 @@ bool delete_task(int id) {
 
     // Jika node tidak ditemukan
     if (node == NULL) {
-        printf("Task with ID %%d not found.\n", id);
+        printf("Tugas dengan ID %d tidak ditemukan.\n", id);
         return false;
     }
 
     // Jika node yang akan dihapus adalah head
     if (node_prev == NULL) {
-        head = node->next;
+        head_single_linked_list = node->next;
     } else {
         // Jika node yang akan dihapus bukan head
         node_prev->next = node->next; 
     }
 
-    printf("Task with ID %%d has been removed: %%s\n", id, node->task.desk);
+    printf("Tugas dengan ID %d telah dihapus: %s\n", id, node->task.desk);
     free(node);
     return true;
 }
@@ -158,7 +158,7 @@ bool delete_task(int id) {
  * Fungsi ini akan menghapus semua node dari linked list dan membebaskan memorinya.
  */
 void remove_list() {
-    Node *node = head;
+    Node *node = head_single_linked_list;
 
     // Lakukan iterasi pada setiap node dan bebaskan memorinya
     while (node != NULL) {
@@ -168,6 +168,6 @@ void remove_list() {
     }
 
     // Set head menjadi NULL karena list sudah kosong
-    head = NULL;
-    puts("All tasks have been cleared.\n");
+    head_single_linked_list = NULL;
+    puts("Semua tugas telah dibersihkan.\n");
 }

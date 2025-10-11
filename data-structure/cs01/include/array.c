@@ -25,7 +25,7 @@
 void add_data_student(Mahasiswa *student, int *hitung, int id, const char *nama, const char *alamat, const char *nomor_hp, float ipk) {
     // Cek apakah kapasitas array sudah penuh
     if (*hitung >= MAX_PELAJAR) {
-        fprintf(stderr, "error: capacity for data student has been maximum.\n");
+        fprintf(stderr, "Error: Kapasitas data mahasiswa sudah penuh.\n");
         return;
     }
 
@@ -76,7 +76,7 @@ int search_data_student(const Mahasiswa *student, int count, int id) {
 void print_data_student(const Mahasiswa *student, int count) {
     // Cek apakah ada data mahasiswa
     if (count == 0) {
-        printf("cannot found data student on list.\n");
+        printf("Tidak ditemukan data mahasiswa dalam daftar.\n");
         return;
     }
 

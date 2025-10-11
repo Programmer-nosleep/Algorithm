@@ -5,20 +5,30 @@ LDFLAGS := -lm
 BUILD_DIR := build
 TARGET  := main
 
-SRC := $(wildcard *.c) $(wildcard include/*.c)
-OBJ := $(patsubst %.c, $(BUILD_DIR)/%.o, $(SRC))
+# Tambahkan direktori sumber ke VPATH agar 'make' dapat menemukannya
+VPATH := include
 
-all:$(TARGET)
+# Ambil semua file .c dari direktori root dan include
+SRC := $(wildcard *.c) $(wildcard include/*.c)
+
+# Buat daftar file objek (.o) yang "datar" di dalam BUILD_DIR
+# Contoh: main.c -> build/main.o, include/array.c -> build/array.o
+OBJ := $(addprefix $(BUILD_DIR)/, $(notdir $(patsubst %.c,%.o,$(SRC))))
+
+.PHONY: all clean run
+
+all: $(TARGET)
+
 $(TARGET): $(OBJ)
 	$(CC) $^ -o $@ $(LDFLAGS)
 
+# Aturan ini sekarang berfungsi untuk semua file sumber karena VPATH
 $(BUILD_DIR)/%.o: %.c
-	@mkdir -p $(@D)
+	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 run: $(TARGET)
 	./$(TARGET)
 
-.PHONY:clean
 clean:
-	rm -rf main build
+	rm -rf $(TARGET) $(BUILD_DIR)

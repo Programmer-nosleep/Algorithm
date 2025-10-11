@@ -9,6 +9,38 @@
 #ifndef __DOUBLELINKEDLIST_H__
 #define __DOUBLELINKEDLIST_H__
 
+/*
+ * Di dunia industri, Double Linked List sangat berguna untuk aplikasi yang 
+ * memerlukan traversi (penelusuran) data dua arah, baik maju maupun mundur. 
+ * Kemampuan untuk mengakses node sebelumnya dan berikutnya secara efisien 
+ * membuatnya ideal untuk beberapa kasus penggunaan berikut:
+ *
+ * 1. Implementasi Undo/Redo:
+ *    Dalam aplikasi seperti editor teks atau perangkat lunak desain grafis, 
+ *    setiap tindakan pengguna (misalnya, mengetik, menghapus, atau menggambar) 
+ *    dapat disimpan sebagai node dalam Double Linked List. Ini memungkinkan 
+ *    pengguna untuk dengan mudah membatalkan (undo) tindakan dengan bergerak 
+ *    mundur dalam daftar, atau mengulanginya (redo) dengan bergerak maju.
+ *
+ * 2. Riwayat Browser (Browser History):
+ *    Tombol "Back" dan "Forward" pada browser web adalah contoh klasik dari 
+ *    penggunaan Double Linked List. Setiap halaman yang dikunjungi disimpan 
+ *    sebagai node, memungkinkan navigasi yang mulus antara halaman-halaman 
+ *    yang telah diakses sebelumnya.
+ *
+ * 3. LRU (Least Recently Used) Cache:
+ *    Double Linked List adalah komponen kunci dalam implementasi LRU Cache. 
+ *    Item yang baru diakses dipindahkan ke depan daftar, sementara item yang 
+ *    paling lama tidak diakses berada di akhir. Ketika cache penuh, item di 
+ *    akhir daftar (yang paling lama tidak digunakan) dapat dengan cepat 
+ *    dihapus.
+ *
+ * 4. Playlist pada Pemutar Musik/Video:
+ *    Dalam aplikasi pemutar media, Double Linked List memungkinkan pengguna 
+ *    untuk tidak hanya melompat ke lagu atau video berikutnya, tetapi juga 
+ *    kembali ke yang sebelumnya dengan mudah.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,8 +64,8 @@ typedef struct Node {
 #define HASH_MAP 100  // Ukuran dari hash map
 
 // Pointer ke node pertama (head) dan terakhir (tail) dalam double linked list.
-extern Node* _head;
-extern Node* _tail;
+extern Node* head_double_linked_list;
+extern Node* tail_double_linked_list;
 // Hash map untuk menyimpan pointer ke node dalam cache untuk akses cepat.
 extern Node* _cache_map[HASH_MAP];
 
@@ -44,7 +76,7 @@ extern Node* _cache_map[HASH_MAP];
  * @param value Nilai dari item cache.
  * @return Pointer ke node yang baru dibuat.
  */
-Node* created_node(int key, int value);
+Node* create_double_node(int key, int value);
 
 /**
  * @brief Menghapus sebuah node dari double linked list.
@@ -97,6 +129,6 @@ void display_cache();
 /**
  * @brief Menghapus semua item dari cache.
  */
-void clear();
+void _clear();
 
 #endif // __DOUBLELINKEDLIST_H__

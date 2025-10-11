@@ -9,6 +9,44 @@
 #ifndef __ARRAY_H__
 #define __ARRAY_H__
 
+/*
+ * Di dunia industri, Array adalah struktur data yang paling fundamental dan 
+ * banyak digunakan karena efisiensi akses datanya. Kemampuan untuk mengakses 
+ * elemen apa pun secara langsung menggunakan indeks (dengan kompleksitas waktu O(1)) 
+ * membuatnya sangat kuat untuk berbagai aplikasi.
+ *
+ * Beberapa contoh penggunaannya meliputi:
+ *
+ * 1. Penyimpanan Kumpulan Data:
+ *    Ini adalah penggunaan paling dasar, mulai dari menyimpan daftar nilai 
+ *    sensor, data keuangan, piksel dalam sebuah gambar, hingga daftar pengguna 
+ *    dalam sebuah aplikasi. Array menyediakan cara yang ringkas dan cepat 
+ *    untuk mengelola data sejenis dalam jumlah besar.
+ *
+ * 2. Implementasi Struktur Data Lain:
+ *    Banyak struktur data tingkat tinggi yang dibangun di atas array. Contohnya 
+ *    termasuk Stack, Queue, Heap, dan Hash Table. Array berfungsi sebagai 
+ *    blok bangunan dasar untuk struktur yang lebih kompleks ini.
+ *
+ * 3. Matriks dan Komputasi Ilmiah:
+ *    Dalam bidang matematika, grafika komputer, dan rekayasa, array multidimensi 
+ *    (matriks) sangat penting. Mereka digunakan untuk melakukan operasi aljabar 
+ *    linear, merepresentasikan grid atau papan permainan (seperti catur), 
+ *    dan memproses gambar digital (sebagai array 2D dari piksel).
+ *
+ * 4. Lookup Tables (Tabel Pencarian):
+ *    Ketika diperlukan akses cepat ke nilai yang telah dihitung sebelumnya, 
+ *    array dapat berfungsi sebagai lookup table. Misalnya, untuk menyimpan nilai 
+ *    fungsi trigonometri atau kode karakter ASCII, di mana indeks array 
+ *    berkorespondensi langsung dengan input.
+ *
+ * 5. Buffer:
+ *    Dalam operasi I/O (input/output), pemrosesan data, dan jaringan, array 
+ *    digunakan sebagai buffer untuk menyimpan data sementara. Misalnya, saat 
+ *    membaca data dari file atau menerima paket data dari jaringan, data 
+ *    tersebut sering kali disimpan dalam buffer (array) sebelum diproses.
+ */
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>

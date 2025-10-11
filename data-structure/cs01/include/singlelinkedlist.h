@@ -9,6 +9,38 @@
 #ifndef __SINGLELINKEDLIST_H__
 #define __SINGLELINKEDLIST_H__
 
+/*
+ * Di dunia industri, Single Linked List adalah salah satu struktur data paling 
+ * fundamental yang digunakan karena kesederhanaan dan efisiensi memorinya. 
+ * Karena setiap node hanya menyimpan pointer ke node berikutnya, ia sangat 
+ * cocok untuk kasus di mana data perlu diakses secara berurutan (sekuensial) 
+ * dan operasi pembalikan (traversi mundur) tidak diperlukan.
+ *
+ * Beberapa contoh penggunaannya meliputi:
+ *
+ * 1. Implementasi Stack dan Queue:
+ *    Single Linked List adalah dasar untuk membangun struktur data lain seperti 
+ *    Stack (tumpukan) dan Queue (antrian). Pada Stack, operasi push (menambah) 
+ *    dan pop (mengambil) dapat dilakukan di awal daftar. Pada Queue, operasi 
+ *    enqueue (menambah) dilakukan di akhir dan dequeue (mengambil) di awal.
+ *
+ * 2. Manajemen Memori:
+ *    Dalam beberapa sistem tingkat rendah, Single Linked List digunakan untuk 
+ *    mengelola daftar blok memori yang bebas (free memory blocks). Ketika 
+ *    sebuah program membutuhkan memori, sistem dapat mencarinya dari daftar 
+ *    ini. Ketika memori dilepaskan, ia dikembalikan ke dalam daftar.
+ *
+ * 3. Representasi Polinomial:
+ *    Dalam komputasi simbolik, sebuah polinomial matematika dapat direpresentasikan 
+ *    sebagai linked list, di mana setiap node menyimpan koefisien dan eksponen 
+ *    dari satu suku.
+ *
+ * 4. Aplikasi Galeri Foto atau Musik:
+ *    Dalam aplikasi sederhana untuk melihat foto atau mendengarkan musik secara 
+ *    berurutan, Single Linked List dapat digunakan untuk menavigasi dari satu 
+ *    item ke item berikutnya menggunakan tombol "Next".
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,7 +70,7 @@ typedef struct Node {
 } Node;
 
 // Pointer ke node pertama (head) dalam linked list.
-extern Node *head;
+extern Node *head_single_linked_list;
 
 /**
  * @brief Membuat sebuah node baru.
@@ -48,7 +80,7 @@ extern Node *head;
  * @param priory Prioritas dari tugas.
  * @return Pointer ke node yang baru dibuat.
  */
-Node* create_node(int id, const char *desk, int priory);
+Node* create_single_node(int id, const char *desk, int priory);
 
 /**
  * @brief Menambahkan tugas baru ke dalam linked list.

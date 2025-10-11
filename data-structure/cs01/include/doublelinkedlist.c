@@ -9,8 +9,8 @@
 #include "doublelinkedlist.h"
 
 // Inisialisasi head, tail, dan hash map dari cache sebagai NULL atau kosong.
-Node* _head = NULL;
-Node* _tail = NULL;
+Node* head_double_linked_list = NULL;
+Node* tail_double_linked_list = NULL;
 Node* _cache_map[HASH_MAP];
 
 /**
@@ -22,11 +22,11 @@ Node* _cache_map[HASH_MAP];
  * @param value Nilai dari item cache.
  * @return Pointer ke node yang baru dibuat.
  */
-Node* created_node(int key, int value) {
+Node* create_double_node(int key, int value) {
     Node* node = (Node*)malloc(sizeof(Node));
 
     if (!node) {
-        fprintf(stderr, "an error on allocated new node.\n");
+        fprintf(stderr, "Error: Terjadi kesalahan saat mengalokasikan node baru.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -50,14 +50,14 @@ void deleted_node(Node *node) {
         node->prev->next = node->next;
     } else {
         // Jika node adalah head, maka head baru adalah node berikutnya
-        _head = node->next;
+        head_double_linked_list = node->next;
     }
 
     if (node->next) {
         node->next->prev = node->prev;
     } else {
         // Jika node adalah tail, maka tail baru adalah node sebelumnya
-        _tail = node->prev;
+        tail_double_linked_list = node->prev;
     }
 }
 
@@ -69,17 +69,17 @@ void deleted_node(Node *node) {
  * @param node Pointer ke node yang akan ditambahkan.
  */
 void adding_front_node(Node *node) {
-    node->next = _head;
+    node->next = head_double_linked_list;
     node->prev = NULL;
 
-    if (_head) {
-        _head->prev = node;
+    if (head_double_linked_list) {
+        head_double_linked_list->prev = node;
     }
 
-    _head = node;
+    head_double_linked_list = node;
 
-    if (_tail == NULL) {
-        _tail = node;
+    if (tail_double_linked_list == NULL) {
+        tail_double_linked_list = node;
     }
 }
 
@@ -91,11 +91,11 @@ void adding_front_node(Node *node) {
  * @return Pointer ke node yang dihapus.
  */
 Node* remove_list_node() {
-    if (_tail == NULL) {
+    if (tail_double_linked_list == NULL) {
         return NULL;
     }
 
-    Node* node = _tail;
+    Node* node = tail_double_linked_list;
     deleted_node(node);
     return node;
 }
@@ -119,11 +119,11 @@ bool get_key(int key, int *val) {
         deleted_node(node);
         adding_front_node(node);
         *val = node->value;
-        printf("hitting %%d, value %%d\n", key, node->value);
+        printf("Cache hit untuk kunci %d, nilai %d\n", key, node->value);
         return true;
     }
 
-    printf("data for key %%d is nothing has been included.\n", key);
+    printf("Data untuk kunci %d tidak ditemukan dalam cache.\n", key);
     return false;
 }
 
@@ -139,44 +139,40 @@ bool get_key(int key, int *val) {
 void add(int key, int val) {
     int idx = key % HASH_MAP;
     Node *node = _cache_map[idx];
-    int size = 0;
+    int current_size = 0;
 
     // Jika item sudah ada, perbarui nilai dan pindahkan ke depan
     if (node && node->key == key) {
         node->value = val;
         deleted_node(node);
         adding_front_node(node);
-        printf("key %%d, value %%d\n", key, val);
+        printf("Kunci %d, nilai %d telah diperbarui.\n", key, val);
         return; 
     }
 
-    // Hitung ukuran cache saat ini
-    if (idx < HASH_MAP && !_cache_map[idx]) {
-        if (idx < HASH_MAP && _cache_map[idx] == NULL) {
-            Node* current = _head;
-            while (current) {
-                size++;
-                current = current->next;            
-            }
-        }
+    // Hitung ukuran cache saat ini dengan melintasi linked list
+    Node* current = head_double_linked_list;
+    while (current) {
+        current_size++;
+        current = current->next;            
+    }
 
-        // Jika cache penuh, hapus item LRU (yang ada di tail)
-        if (size >= KAPASITAS) {
-            Node* remove = remove_list_node();
-            if (remove) {
-                int idx_old = remove->key % HASH_MAP;
-                _cache_map[idx_old] = NULL;
-                printf("data has been removed from %%d \n", remove->key);
-                free(remove);
-            }
+    // Jika cache penuh, hapus item LRU (yang ada di tail)
+    if (current_size >= KAPASITAS) {
+        Node* remove = remove_list_node();
+        if (remove) {
+            int idx_old = remove->key % HASH_MAP;
+            _cache_map[idx_old] = NULL;
+            printf("Data dengan kunci %d telah dihapus dari cache (LRU).\n", remove->key);
+            free(remove);
         }
     }
 
     // Buat node baru dan tambahkan ke depan
-    Node* new = created_node(key, val);
+    Node* new = create_double_node(key, val);
     adding_front_node(new);
     _cache_map[idx] = new;
-    printf("adding key = %%d, value = %%d", key, val);
+    printf("Menambahkan kunci = %d, nilai = %d\n", key, val);
 }
 
 /**
@@ -185,10 +181,10 @@ void add(int key, int val) {
  * Menampilkan item dari yang paling baru digunakan (head) ke yang paling lama digunakan (tail).
  */
 void display_cache() {
-    printf("data cache");
-    Node* node = _head;
+    printf("Isi cache: ");
+    Node* node = head_double_linked_list;
     if (!node) {
-        puts("data is empty");
+        puts("Cache kosong.");
     }
 
     while (node) {
@@ -206,8 +202,8 @@ void display_cache() {
  *
  * Fungsi ini mengosongkan cache dengan menghapus semua node dan mereset hash map.
  */
-void clear() {
-    Node* node = _head;
+void _clear() {
+    Node* node = head_double_linked_list;
     while (node) {
         Node* next = node->next;
         free(node);
@@ -218,6 +214,6 @@ void clear() {
         _cache_map[i] = NULL;
     }
 
-    _head = _tail = NULL;
-    puts("cache has been clearing.");
+    head_double_linked_list = tail_double_linked_list = NULL;
+    puts("Cache telah dibersihkan.");
 }
