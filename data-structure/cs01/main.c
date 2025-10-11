@@ -2,6 +2,7 @@
 #include <unistd.h>
 
 #include "include/array.h"
+#include "include/hash_table.h"
 #include "include/singlelinkedlist.h"
 #include "include/doublelinkedlist.h"
 #include "include/circularlinkedlist.h"
@@ -153,15 +154,27 @@ void _impl_tree() {
     remove_tree(root);
 }
 
+void _impl_hash_table() {
+    HashTable *table = create_hash_table(SIZE_TABLE);
+
+    add_table(table, "nama", "budi");
+    add_table(table, "usia", "32");
+    add_table(table, "pekerjaan", "maling");
+    printf("nama: %s\n", search_table(table, "nama"));
+    printf("usia: %s\n", search_table(table, "usia"));
+    printf("pekerjaan: %s\n", search_table(table, "pekerjaan"));
+}
+
 int main(void) {
     // _impl_singlelinkedlist();
     // _impl_doublelinkedlist();
-    _impl_circularlinkedlist();
+    // _impl_circularlinkedlist();
 
     // _impl_array(); 
     // _impl_stack();
     // _impl_queue();
     // _impl_tree();
+    _impl_hash_table();
 
     return 0;
 }
