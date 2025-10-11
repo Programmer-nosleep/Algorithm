@@ -2,10 +2,6 @@
 #define __STACK_H__
 
 /*
- * =============================================================================
- * PENJELASAN STRUKTUR DATA STACK (TUMPUKAN) UNTUK PEMBELAJARAN
- * =============================================================================
- *
  * Apa itu Stack?
  * Bayangkan sebuah tumpukan piring. Anda hanya bisa menambah piring baru di atas
  * (PUSH), dan Anda hanya bisa mengambil piring dari atas (POP). Anda tidak bisa
@@ -75,10 +71,10 @@
  *          ke node berikutnya dalam tumpukan. Ini adalah blok bangunan dasar
  *          untuk implementasi stack menggunakan linked list.
  */
-typedef struct Node {
+typedef struct NodeStack {
     int64_t data;       ///< Data yang disimpan dalam node.
-    struct Node* next;  ///< Pointer ke node berikutnya di bawahnya dalam tumpukan.
-} Node;
+    struct NodeStack* next;  ///< Pointer ke node berikutnya di bawahnya dalam tumpukan.
+} NodeStack;
 
 /**
  * @struct Stack
@@ -87,13 +83,13 @@ typedef struct Node {
  *          atas (puncak tumpukan) dan juga melacak jumlah total elemen dalam tumpukan.
  */
 typedef struct {
-    Node* first;        ///< Pointer ke node teratas (puncak) dari tumpukan. NULL jika tumpukan kosong.
+    NodeStack* first;        ///< Pointer ke node teratas (puncak) dari tumpukan. NULL jika tumpukan kosong.
     int size;           ///< Jumlah elemen saat ini dalam tumpukan.
 } Stack;
 
 // Variabel global 'head' tampaknya tidak digunakan oleh struktur Stack ini
 // dan mungkin merupakan sisa dari implementasi lain. Sebaiknya dihapus jika tidak relevan.
-extern Node* head_stack;
+extern NodeStack* head_stack;
 
 /**
  * @brief Membuat dan menginisialisasi sebuah stack baru.

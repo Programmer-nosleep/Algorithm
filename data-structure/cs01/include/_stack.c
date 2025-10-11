@@ -2,7 +2,7 @@
 
 // Variabel global 'head' ini tidak digunakan dalam implementasi stack ini.
 // Ini mungkin sisa dari kode sebelumnya dan bisa dihapus untuk kebersihan kode.
-Node *head_stack = NULL;
+NodeStack *head_stack = NULL;
 
 /**
  * @brief Mengalokasikan dan menginisialisasi struktur Stack baru.
@@ -39,7 +39,7 @@ bool empty(Stack *s) {
  */
 void push(Stack *s, int64_t data) {
     // 1. Alokasikan memori untuk node baru yang akan menyimpan data.
-    Node *node = (Node*)malloc(sizeof(Node));
+    NodeStack *node = (NodeStack*)malloc(sizeof(NodeStack));
 
     // 2. Periksa apakah alokasi memori berhasil.
     if (!node) {
@@ -76,7 +76,7 @@ long pop(Stack *s) {
     }
 
     // 2. Simpan pointer ke node puncak saat ini agar kita tidak kehilangan jejaknya.
-    Node *node = s->first;
+    NodeStack *node = s->first;
     
     // 3. Ambil data dari node puncak.
     int64_t data = node->data;

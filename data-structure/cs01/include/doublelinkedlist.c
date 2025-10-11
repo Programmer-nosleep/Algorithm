@@ -9,9 +9,9 @@
 #include "doublelinkedlist.h"
 
 // Inisialisasi head, tail, dan hash map dari cache sebagai NULL atau kosong.
-Node* head_double_linked_list = NULL;
-Node* tail_double_linked_list = NULL;
-Node* _cache_map[HASH_MAP];
+NodeDoubleLinkedlist* head_double_linked_list = NULL;
+NodeDoubleLinkedlist* tail_double_linked_list = NULL;
+NodeDoubleLinkedlist* _cache_map[HASH_MAP];
 
 /**
  * @brief Membuat sebuah node baru.
@@ -22,8 +22,8 @@ Node* _cache_map[HASH_MAP];
  * @param value Nilai dari item cache.
  * @return Pointer ke node yang baru dibuat.
  */
-Node* create_double_node(int key, int value) {
-    Node* node = (Node*)malloc(sizeof(Node));
+NodeDoubleLinkedlist* create_double_node(int key, int value) {
+    NodeDoubleLinkedlist* node = (NodeDoubleLinkedlist*)malloc(sizeof(NodeDoubleLinkedlist));
 
     if (!node) {
         fprintf(stderr, "Error: Terjadi kesalahan saat mengalokasikan node baru.\n");
@@ -45,7 +45,7 @@ Node* create_double_node(int key, int value) {
  * 
  * @param node Pointer ke node yang akan dihapus.
  */
-void deleted_node(Node *node) {
+void deleted_node(NodeDoubleLinkedlist *node) {
     if (node->prev) {
         node->prev->next = node->next;
     } else {
@@ -68,7 +68,7 @@ void deleted_node(Node *node) {
  * 
  * @param node Pointer ke node yang akan ditambahkan.
  */
-void adding_front_node(Node *node) {
+void adding_front_node(NodeDoubleLinkedlist *node) {
     node->next = head_double_linked_list;
     node->prev = NULL;
 
@@ -90,12 +90,12 @@ void adding_front_node(Node *node) {
  * 
  * @return Pointer ke node yang dihapus.
  */
-Node* remove_list_node() {
+NodeDoubleLinkedlist* remove_list_node() {
     if (tail_double_linked_list == NULL) {
         return NULL;
     }
 
-    Node* node = tail_double_linked_list;
+    NodeDoubleLinkedlist* node = tail_double_linked_list;
     deleted_node(node);
     return node;
 }
@@ -112,7 +112,7 @@ Node* remove_list_node() {
  */
 bool get_key(int key, int *val) {
     int idx = key % HASH_MAP;
-    Node* node = _cache_map[idx];
+    NodeDoubleLinkedlist* node = _cache_map[idx];
 
     if (node && node->key == key) {
         // Pindahkan node ke depan karena baru saja diakses
@@ -138,7 +138,7 @@ bool get_key(int key, int *val) {
  */
 void add(int key, int val) {
     int idx = key % HASH_MAP;
-    Node *node = _cache_map[idx];
+    NodeDoubleLinkedlist *node = _cache_map[idx];
     int current_size = 0;
 
     // Jika item sudah ada, perbarui nilai dan pindahkan ke depan
@@ -151,7 +151,7 @@ void add(int key, int val) {
     }
 
     // Hitung ukuran cache saat ini dengan melintasi linked list
-    Node* current = head_double_linked_list;
+    NodeDoubleLinkedlist* current = head_double_linked_list;
     while (current) {
         current_size++;
         current = current->next;            
@@ -159,7 +159,7 @@ void add(int key, int val) {
 
     // Jika cache penuh, hapus item LRU (yang ada di tail)
     if (current_size >= KAPASITAS) {
-        Node* remove = remove_list_node();
+        NodeDoubleLinkedlist* remove = remove_list_node();
         if (remove) {
             int idx_old = remove->key % HASH_MAP;
             _cache_map[idx_old] = NULL;
@@ -169,7 +169,7 @@ void add(int key, int val) {
     }
 
     // Buat node baru dan tambahkan ke depan
-    Node* new = create_double_node(key, val);
+    NodeDoubleLinkedlist* new = create_double_node(key, val);
     adding_front_node(new);
     _cache_map[idx] = new;
     printf("Menambahkan kunci = %d, nilai = %d\n", key, val);
@@ -182,7 +182,7 @@ void add(int key, int val) {
  */
 void display_cache() {
     printf("Isi cache: ");
-    Node* node = head_double_linked_list;
+    NodeDoubleLinkedlist* node = head_double_linked_list;
     if (!node) {
         puts("Cache kosong.");
     }
@@ -203,9 +203,9 @@ void display_cache() {
  * Fungsi ini mengosongkan cache dengan menghapus semua node dan mereset hash map.
  */
 void _clear() {
-    Node* node = head_double_linked_list;
+    NodeDoubleLinkedlist* node = head_double_linked_list;
     while (node) {
-        Node* next = node->next;
+        NodeDoubleLinkedlist* next = node->next;
         free(node);
         node = next;
     }

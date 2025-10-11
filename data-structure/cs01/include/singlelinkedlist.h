@@ -64,13 +64,13 @@ typedef struct Task {
  *
  * Setiap node berisi sebuah tugas (Task) dan pointer ke node berikutnya dalam list.
  */
-typedef struct Node {
+typedef struct NodeSingleLinkedlist {
     Task task;          // Data tugas yang disimpan di dalam node
-    struct Node* next;  // Pointer ke node berikutnya
-} Node;
+    struct NodeSingleLinkedlist* next;  // Pointer ke node berikutnya
+} NodeSingleLinkedlist;
 
 // Pointer ke node pertama (head) dalam linked list.
-extern Node *head_single_linked_list;
+extern NodeSingleLinkedlist *head_single_linked_list;
 
 /**
  * @brief Membuat sebuah node baru.
@@ -80,7 +80,7 @@ extern Node *head_single_linked_list;
  * @param priory Prioritas dari tugas.
  * @return Pointer ke node yang baru dibuat.
  */
-Node* create_single_node(int id, const char *desk, int priory);
+NodeSingleLinkedlist* create_single_node(int id, const char *desk, int priory);
 
 /**
  * @brief Menambahkan tugas baru ke dalam linked list.

@@ -52,22 +52,22 @@
  *
  * Setiap node berisi pasangan kunci-nilai (key-value) dan pointer ke node sebelumnya dan berikutnya.
  */
-typedef struct Node {
+typedef struct NodeDoubleLinkedlist {
     int key;            // Kunci dari item cache
     int value;          // Nilai dari item cache
-    struct Node* next;  // Pointer ke node berikutnya
-    struct Node* prev;  // Pointer ke node sebelumnya
-} Node;
+    struct NodeDoubleLinkedlist* next;  // Pointer ke node berikutnya
+    struct NodeDoubleLinkedlist* prev;  // Pointer ke node sebelumnya
+} NodeDoubleLinkedlist;
 
 // Konstanta untuk menentukan batas maksimal cache
 #define KAPASITAS 3   // Kapasitas maksimal dari cache
 #define HASH_MAP 100  // Ukuran dari hash map
 
 // Pointer ke node pertama (head) dan terakhir (tail) dalam double linked list.
-extern Node* head_double_linked_list;
-extern Node* tail_double_linked_list;
+extern NodeDoubleLinkedlist* head_double_linked_list;
+extern NodeDoubleLinkedlist* tail_double_linked_list;
 // Hash map untuk menyimpan pointer ke node dalam cache untuk akses cepat.
-extern Node* _cache_map[HASH_MAP];
+extern NodeDoubleLinkedlist* _cache_map[HASH_MAP];
 
 /**
  * @brief Membuat sebuah node baru.
@@ -76,28 +76,28 @@ extern Node* _cache_map[HASH_MAP];
  * @param value Nilai dari item cache.
  * @return Pointer ke node yang baru dibuat.
  */
-Node* create_double_node(int key, int value);
+NodeDoubleLinkedlist* create_double_node(int key, int value);
 
 /**
  * @brief Menghapus sebuah node dari double linked list.
  *
  * @param node Pointer ke node yang akan dihapus.
  */
-void deleted_node(Node *node);
+void deleted_node(NodeDoubleLinkedlist *node);
 
 /**
  * @brief Menambahkan sebuah node ke depan (head) dari double linked list.
  *
  * @param node Pointer ke node yang akan ditambahkan.
  */
-void adding_front_node(Node *node);
+void adding_front_node(NodeDoubleLinkedlist *node);
 
 /**
  * @brief Menghapus node terakhir (tail) dari double linked list.
  *
  * @return Pointer ke node yang dihapus.
  */
-Node* remove_list_node();
+NodeDoubleLinkedlist* remove_list_node();
 
 /**
  * @brief Mendapatkan nilai dari sebuah item cache berdasarkan kunci.
